@@ -1,6 +1,8 @@
 import javax.swing.text.html.HTMLDocument;
 import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.*;
 
 public class lab10 {
@@ -56,32 +58,50 @@ public class lab10 {
         return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 
+    public static void printWordsFromStack(Stack<String> stack){
+        if(stack.size() == 1){
+            System.out.print(firstLetterUpperCase(stack.peek().substring(0,stack.pop().length())) + '.');
+        }
+        else{
+            System.out.print(firstLetterUpperCase(stack.peek().substring(0,stack.pop().length())) + ' ');
+            int length = stack.size();
+            for(int i = 0; i < length-1; i++){
+                System.out.print(stack.pop() + ' ');
+            }
+            System.out.print(firstLetterLowerCase(stack.pop()) + '.');
+        }
+    }
+
+    public static void addToStackDeleteCharactersFromAWord(Stack<String> stack, StringBuffer word){
+        stack.add(word.toString());
+        word.delete(0,word.length());
+    }
+
     // zad 5
-    public static void odwrocSlowaWZdaniu(){
-        Scanner input = new Scanner(System.in);
-        StringBuffer strBuff = new StringBuffer();
-        Stack<String> kolejka = new Stack<>();
-
-        while(true){
-            strBuff.append(input.nextLine());
-            if (!(strBuff.charAt(strBuff.length()-1) == '.')){
-                kolejka.add(String.valueOf(strBuff));
+    public static void reverseWordsInTheSentence(String sentence){
+        Stack<String> stack = new Stack<>();
+        int strLength = sentence.length();
+        StringBuffer word = new StringBuffer();
+        int i = 0;
+        while (i < strLength) {
+            if (sentence.charAt(i) == ' ') {
+                if (word.length() == 0) {
+                    i++;
+                    System.out.print(" ");
+                } else {
+                    i++;
+                    addToStackDeleteCharactersFromAWord(stack, word);
+                }
+            } else if (sentence.charAt(i) == '.') {
+                i++;
+                addToStackDeleteCharactersFromAWord(stack, word);
+                printWordsFromStack(stack);
+                stack.clear();
+            } else {
+                word.append(sentence.charAt(i));
+                i++;
             }
-            else{
-                kolejka.add(String.valueOf(strBuff));
-                break;
-            }
-            strBuff.delete(0, strBuff.length());
         }
-
-        System.out.print(firstLetterUpperCase(kolejka.peek().substring(0,kolejka.pop().length()-1)) + ' ');
-        int dlugosc = kolejka.size();
-
-        for(int i = 0; i < dlugosc-1; i++){
-            System.out.print(kolejka.pop() + ' ');
-        }
-
-        System.out.print(firstLetterLowerCase(kolejka.pop()) + '.');
     }
 
     // zad 6
@@ -138,22 +158,22 @@ public class lab10 {
     }
 
     public static void main(String... args){
-        LinkedList<String> ekipa = new LinkedList<>();
-        ekipa.add("Jacek");
-        ekipa.add("Tomek");
-        ekipa.add("Gacek");
-        ekipa.add("Piotrek");
-        ekipa.add("Adam");
-        ekipa.add("Wieslaw");
-        ekipa.add("Czeslaw");
-        System.out.println(ekipa);
-        redukuj(ekipa,2);
-        System.out.println(ekipa);
-        odwroc(ekipa);
-        System.out.println(ekipa);
-        odwrocSlowaWZdaniu();
-        podzielNaCyfry(2015);
-        sitoEratostenesa(60);
-        print(ekipa);
+//        LinkedList<String> ekipa = new LinkedList<>();
+//        ekipa.add("Jacek");
+//        ekipa.add("Tomek");
+//        ekipa.add("Gacek");
+//        ekipa.add("Piotrek");
+//        ekipa.add("Adam");
+//        ekipa.add("Wieslaw");
+//        ekipa.add("Czeslaw");
+//        System.out.println(ekipa);
+//        redukuj(ekipa,2);
+//        System.out.println(ekipa);
+//        odwroc(ekipa);
+//        System.out.println(ekipa);
+          reverseWordsInTheSentence("Ala ma kota. Jej kot lubi myszy.");
+//        podzielNaCyfry(2015);
+//        sitoEratostenesa(60);
+//        print(ekipa);
     }
 }
