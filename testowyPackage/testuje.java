@@ -7,5 +7,6 @@ public class testuje {
         int b = 16;
         int c = a + b;
         System.out.println(c);
+        System.out.println(c + 10);
     }
 }
