@@ -1,4 +1,4 @@
-package pl.edu.uwm.gkrych.pl.edu.uwm.gkrych.trzecilab;
+package pl.edu.uwm.gkrych.pl.imiajd.krych.trzecilab;
 
 import java.util.*;
 import java.lang.Math;
